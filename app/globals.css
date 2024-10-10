@@ -1,0 +1,76 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+    --text: #e4edf1;
+    --background: #020303;
+    --primary: #2c4854;
+    --secondary: #182930;
+    --accent: #6eb5d1;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary); 
+  border-radius: 40px;      
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);   
+  border-radius: 40px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: var(--text);
+}
+
+.gradient-background {
+  background: linear-gradient(
+    to bottom right,
+    transparent,
+    var(--secondary)
+  )
+  var(--background);
+}
+
+/* Keeping the chat height same as it works on almost all screens */
+
+/* height of screen - navbar height - page padding height - Chat div margin top height - Disclaimer height - horizontal line height - input height - input padding height - input margin top height*/
+.chat-height {
+  /* height: calc(100vh - 48px - 48px - 24px - 72px - 32px - 80px - 16px - 16px) */
+  height: calc(100vh - 312px);
+}
+
+/* @media (min-width: 768px) {
+  .chat-height {
+  
+    height: calc(100vh - 312px);
+  } 
+} */
