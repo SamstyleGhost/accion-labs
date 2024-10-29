@@ -28,6 +28,8 @@ const Chat = () => {
 
     //  @param : contains the user query as the parameter 
     //  @output : Gives the max_limit number of similar sections
+    /*
+
     const searchResponse = await fetch('/api/search',{
       method: 'POST',
       body: JSON.stringify({
@@ -96,6 +98,19 @@ const Chat = () => {
     // Append that and give it to the ChatGPT prompt
     // ChatGPT response will be given back as res.json
 
+    */
+
+    const searchResponse = await fetch('/api/embeddings',{
+      method: 'POST',
+      body: JSON.stringify({
+        query: query
+      }),
+      'content-type': 'application/json'
+    });
+    
+    const response = await searchResponse.json();
+    console.log(response);
+    
     setQuery('');
     setLoading(false);
   }

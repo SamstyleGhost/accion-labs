@@ -7,7 +7,7 @@ import { SectionContextProvider } from '@context';
 const inter = Cabin({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Better Call AI',
+  title: 'Legal Case Search',
   description: 'Get the answer for any legal query',
 }
 
