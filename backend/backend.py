@@ -13,9 +13,9 @@ import summarizer
 import date_converter
 
 load_dotenv()
-csvFile = pandas.read_csv("./../data/shortlisted_cases.csv")
-url: str = os.environ["SUPABASE_URL"]
-key: str = os.environ["SUPABASE_ACCESS_TOKEN"]
+csvFile = pandas.read_csv("./../data/thousand_cases.csv")
+url: str = os.environ["SUPABASE_PROD_URL"]
+key: str = os.environ["SUPABASE_PROD_ACCESS_TOKEN"]
 
 supabase: Client = create_client(url, key)
 encoding_name = "cl100k_base"
@@ -67,33 +67,36 @@ def readCSV():
     summary = summarizer.getSummary(docContentsStripped)
     curr["summary"] = summary
 
-    response = supabase.table("judgements_sc").insert(curr).execute()
-    print(response)
-
-    splitContents = summary.split('. ')
-    sentence = ""
-
-    # Creating chunks of about ~300 token size
-    for chunk in splitContents:
-      chunk = chunk.strip()
-      if len(encoding.encode(sentence)) > CHUNK_SIZE:
-        chunks.append(sentence)
-        sentence = ""
-      sentence += chunk
-      
-    if sentence != "":
-      chunks.append(sentence.strip())
+    try:
+      response = supabase.table("judgements_sc").insert(curr).execute()
+      print(response)
+    except:
+      continue
+    else:
+      splitContents = summary.split('. ')
       sentence = ""
 
-    # Creating vector embeddings of chunks and pushing them to the database
-    for chunk in chunks:
-      embeddings = model.encode(chunk)
-      embedToSend = embeddings.tolist()
-      newCurr = {}
-      newCurr["case_no"] = curr["case_no"]
-      newCurr["embedding"] = embedToSend
-      response = supabase.table("judgements_embeddings").insert(newCurr).execute()
-      print(response)
+      # Creating chunks of about ~300 token size
+      for chunk in splitContents:
+        chunk = chunk.strip()
+        if len(encoding.encode(sentence)) > CHUNK_SIZE:
+          chunks.append(sentence)
+          sentence = ""
+        sentence += chunk
+        
+      if sentence != "":
+        chunks.append(sentence.strip())
+        sentence = ""
+
+      # Creating vector embeddings of chunks and pushing them to the database
+      for chunk in chunks:
+        embeddings = model.encode(chunk)
+        embedToSend = embeddings.tolist()
+        newCurr = {}
+        newCurr["case_no"] = curr["case_no"]
+        newCurr["embedding"] = embedToSend
+        response = supabase.table("judgements_embeddings").insert(newCurr).execute()
+        print(response)
 
 def getPDF(url):
   response = requests.get(url)

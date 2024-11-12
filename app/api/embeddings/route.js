@@ -12,11 +12,11 @@ export async function POST(req) {
     const response = await pipe(body.query, { pooling: 'mean', normalize: true })
     const embedding = Array.from(response.data)
 
-    console.log("Response for the embeddings is: ", embedding);
+    // console.log("Response for the embeddings is: ", embedding);
 
     const { data, error } = await supabase.rpc('case_query_search', {
       query_embedding: embedding,
-      similarity_threshold: 0.5,
+      similarity_threshold: 0.8,
       match_count: 3
     })
 
@@ -24,8 +24,6 @@ export async function POST(req) {
       console.log(error);
       return NextResponse.json({ message: error }, { status: 500 });
     }
-
-    console.log("Data is: ", data);
 
     const cases = new Set()
 

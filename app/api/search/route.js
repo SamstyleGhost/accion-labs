@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 // import OpenAIApi from 'openai';
-import { supabase } from "@utils";  
+import { supabase } from "@utils";
 
-export async function POST (req) {
-  
+export async function POST(req) {
+
   // const openai = new OpenAIApi({ apiKey: process.env.OPENAI_API_KEY});
 
   try {
-    
+
     const body = await req.json();
-    // console.log("Body is: ",body);
+    console.log("Body is: ", body.query);
 
     const response = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
@@ -19,7 +19,7 @@ export async function POST (req) {
       },
       body: JSON.stringify({
         model: 'text-embedding-ada-002',
-        input: body.query     
+        input: body.query
       })
     })
 
@@ -33,11 +33,11 @@ export async function POST (req) {
       match_count: 3
     });
 
-    
-    if(error) {
+
+    if (error) {
       console.log(error);
       return NextResponse.json({ message: error }, { status: 500 });
-    } 
+    }
 
     return NextResponse.json({ message: data }, { status: 200 });
   } catch (error) {
