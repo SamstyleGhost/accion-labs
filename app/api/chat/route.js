@@ -19,7 +19,8 @@ export async function POST(req) {
     //
     //   }
     const groqStream = await getGroqChatStream({ query: body.query, context: body.context });
-    return NextResponse.json({ message: groqStream.choices[0]?.delta?.content }, { status: 200 });
+    console.log("Groq response is: ", groqStream);
+    return NextResponse.json({ message: groqStream.choices[0]?.message?.content }, { status: 200 });
     // })
 
     // return new NextResponse(stream, {
@@ -30,6 +31,7 @@ export async function POST(req) {
     //   }
     // })
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }

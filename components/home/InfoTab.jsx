@@ -8,7 +8,6 @@ const InfoTab = () => {
 
   const { sections } = useSectionContext();
 
-  console.log("Sections: ", sections);
   return (
     <div className='w-full md:w-1/4 mt-8 md:mt-0 flex flex-col gap-8 justify-between items-center md:items-start'>
       <div className='w-full flex flex-col gap-8'>

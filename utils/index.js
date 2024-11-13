@@ -62,7 +62,7 @@ export async function* LlamaStream({ query, context }) {
   }
 }
 
-export async function* getGroqChatStream({ query, context }) {
+export async function getGroqChatStream({ query, context }) {
 
   const contextData = JSON.stringify(context);
 
@@ -86,7 +86,7 @@ export async function* getGroqChatStream({ query, context }) {
       ],
 
       model: "llama3-8b-8192",
-      temperature: 1.0,
+      temperature: 0.2,
       max_tokens: 1024,
       top_p: 1,
       stop: null,
