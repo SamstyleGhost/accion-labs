@@ -9,13 +9,11 @@ export const SectionContextProvider = ({ children }) => {
 
   const [sections, setSections] = useState([]);
 
-  console.log(sections);
-
   return (
     <SectionContext.Provider
       value={{
         sections,
-        setSections
+        setSections,
       }}
     >
       {children}

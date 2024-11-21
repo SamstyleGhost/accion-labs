@@ -96,7 +96,6 @@ export async function getGroqChatStream({ query, context, model }) {
     // for await (const chunk of response) {
     //   yield chunk;
     // }
-    console.log("Response is: ", response)
     return response;
   } catch (error) {
     console.error(error);

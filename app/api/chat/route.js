@@ -4,11 +4,9 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
 
   const body = await req.json();
-  const model = "llama3-8b-8192";
 
   try {
-    const groqStream = await getGroqChatStream({ query: body.query, context: body.context, model: model });
-    console.log("Groq response is: ", groqStream);
+    const groqStream = await getGroqChatStream({ query: body.query, context: body.context, model: body.model });
     return NextResponse.json({ message: groqStream.choices[0]?.message?.content }, { status: 200 });
     // })
 

@@ -26,14 +26,19 @@ export async function POST(req) {
     }
 
     const cases = new Set()
+    const similarities = [];
 
     data.map((item) => {
       cases.add(item.case_no);
     })
 
+    data.map(item => {
+      similarities.push(item.similarity);
+    })
+
     const casesData = Array.from(cases)
 
-    return NextResponse.json({ message: casesData }, { status: 200 })
+    return NextResponse.json({ message: casesData, similarities: similarities }, { status: 200 })
   } catch (error) {
     return NextResponse.json({ message: "Failure" }, { status: 400 })
   }
