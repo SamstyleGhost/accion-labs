@@ -4,21 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
 
   const body = await req.json();
+  const model = "llama3-8b-8192";
 
   try {
-    // const stream = await LlamaStream({ query: body.query, context: body.context });
-    // const stream = new ReadableStream({
-    //   async start(controller) {
-    //     // const llamaStream = await LlamaStream({ query: body.query, context: body.context });
-    //     const groqStream = await getGroqChatStream({ query: body.query, context: body.context });
-    //     // for await (const chunk of groqStream) {
-    //     //   
-    //     //   controller.enqueue(chunk.choices[0]?.delta?.content);
-    //     // }
-    //     // controller.close();
-    //
-    //   }
-    const groqStream = await getGroqChatStream({ query: body.query, context: body.context });
+    const groqStream = await getGroqChatStream({ query: body.query, context: body.context, model: model });
     console.log("Groq response is: ", groqStream);
     return NextResponse.json({ message: groqStream.choices[0]?.message?.content }, { status: 200 });
     // })

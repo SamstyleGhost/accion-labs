@@ -16,7 +16,7 @@ export async function POST(req) {
 
     const { data, error } = await supabase.rpc('case_query_search', {
       query_embedding: embedding,
-      similarity_threshold: 0.8,
+      similarity_threshold: 0.85,
       match_count: 3
     })
 

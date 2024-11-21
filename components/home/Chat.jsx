@@ -11,7 +11,6 @@ const Chat = () => {
 
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const [sectionData, setSectionData] = useState([{}]);
 
   const [messages, setMessages] = useState([{
     sender: 'assistant',
@@ -24,81 +23,7 @@ const Chat = () => {
     setLoading(true);
 
     setMessages(prev => [...prev, { sender: 'user', message: query }])
-    setMessages((prev) => [...prev, { sender: "assistant", message: "..." }]);
-
-    //  @param : contains the user query as the parameter 
-    //  @output : Gives the max_limit number of similar sections
-    /*
-
-    const searchResponse = await fetch('/api/search',{
-      method: 'POST',
-      body: JSON.stringify({
-        query: query
-      }),
-      'content-type': 'application/json'
-    });
-
-    const results = await searchResponse.json();
-
-    console.log("Results are: ",results);
-    setSections(results.message);
-
-    let sections = [];
-
-    await results.message.map(section => {
-      const dataObject = {
-        act_number: section.act_number,
-        document_name: section.document_name,
-        section_title: section.section_title,
-        section_text: section.section_text
-      };
-
-      sections.push(dataObject);
-    });
-
-    const answerResponse = await fetch('/api/chat', {
-      method: 'POST',
-      body: JSON.stringify({
-        query: query,
-        sections: sections
-      }),
-      'content-type': 'application/json'
-    })
-
-    if(!answerResponse) {
-      setLoading(false);
-      return;
-    }
-
-    // console.log("Answer response: ", answerResponse);
-    const queryAnswer = await answerResponse.json();
-
-    setAnswer(queryAnswer.message);
-
-    // if(!data) {
-    //   setLoading(false);
-    //   return;
-    // }
-
-    // const reader = data.getReader();
-    // const decoder = new TextDecoder();
-    // let done = false;
-
-    // while(!done) {
-    //   console.log("Inside while");
-    //   const { value, doneReading } = await reader.read();
-    //   done = doneReading;
-
-    //   const chunkValue = decoder.decode(value);
-    //   setAnswer(prev => prev + chunkValue);
-    // }
-    setMessages(prev => [...prev, { sender: 'assistant', message: queryAnswer.message }]);
-
-    // * From that result texts, from MongoDB, get legal ontology information used in those sections
-    // Append that and give it to the ChatGPT prompt
-    // ChatGPT response will be given back as res.json
-
-    */
+    // setMessages((prev) => [...prev, { sender: "assistant", message: "..." }]);
 
     const searchResponse = await fetch('/api/embeddings', {
       method: 'POST',
@@ -122,21 +47,6 @@ const Chat = () => {
     response = await caseDataResponse.json()
     setSections(response.message);
     console.log("Case Data response is: ", response);
-
-    // const answerStreamEventSource = new EventSource('/api/chat');
-    // answerStreamEventSource.onmessage = (event) => {
-    //   if (event.data === "[DONE]") {
-    //     answerStreamEventSource.close()
-    //   } else {
-    //     setAnswer(JSON.parse(event.data));
-    //     setMessages(prev => [...prev, { sender: "assistant", message: JSON.parse(event.data) }])
-    //   }
-    // }
-    //
-    // answerStreamEventSource.onerror = error => {
-    //   console.error("Error in source stream", error);
-    //   answerStreamEventSource.close();
-    // }
 
     const answerResponse = await fetch('/api/chat', {
       method: 'POST',
@@ -168,24 +78,6 @@ const Chat = () => {
 
     setQuery('');
     setLoading(false);
-
-    // return () => eventSource.close();
-
-    // const answerResponse = await fetch('/api/chat', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     query: query,
-    //     context: response.message
-    //   }),
-    //   'content-type': 'application/json'
-    // })
-    //
-    // response = await answerResponse.json()
-    // console.log("Chat response is: ", response);
-    //
-    // setAnswer(response.message);
-    // setMessages(prev => [...prev, { sender: "assistant", message: response.message }]);
-
   }
 
   return (
