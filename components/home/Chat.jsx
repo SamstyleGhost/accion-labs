@@ -12,7 +12,7 @@ import { useSectionContext } from '@context';
 const Chat = () => {
 
   const { sections, setSections } = useSectionContext();
-  const model = "llama3-8b-8192";
+  const model = "llama3-70b-8192";
 
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
